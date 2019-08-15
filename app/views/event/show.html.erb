@@ -1,0 +1,58 @@
+<div class="container show_event">
+  <div class="col text-center">
+    <h2>Event n°<%=@event.id%></h2><br>
+  </div>
+
+  <div class="card mx-3">
+    <div class="card-header">
+      <strong><%= @event.title%></strong>
+    </div>
+
+    <div class="card-body px-4">
+
+      <br/>   
+      <p><strong>Price :</strong> <%= @event.price%></p>
+      <p><strong>Duration:</strong><%= @event.duration%> min</p>
+      <p><strong>Participation :</strong> <%= Attendance.where(event_id: @event.id).count  %></p>
+      <p><strong>Administrator mail :</strong> <%= admin_event_email%></p>
+      <p><strong>Start at :</strong> <%= @event.start_date%></p>
+      <p><strong>End at :</strong> <%=event_end_date%></p>
+      <p><strong>Location :</strong> <%= @event.location%></p>
+      <blockquote class="blockquote mb-0">
+        <em>"<%= @event.description %>"</em><p></p>
+        <footer class="blockquote-footer">
+          <p>By : <a href="<%=@event.admin_id%>" class="card-link"><%= User.find(@event.admin_id).first_name%> <%= User.find(@event.admin_id).last_name %></a></p>
+          <p>Create: <%= @event.created_at %></p>
+
+          <div class="row flex-row">
+            <%if current_user%>
+              <%if current_user.id == @event.admin_id%>
+                <a href="<%=edit_event_path(@event.id)%>" class="btn btn-info ml-4">Edit event</a>
+                <%= form_tag url_for(action: 'destroy'), method: "delete" do%>
+                  <%= submit_tag "Delete event", class: 'btn btn-danger ml-3'%>
+                <%end%>
+              <%end%>
+              <%else%>
+                <span class="d-flex align-items-center">Login to edit your event</span>
+           <%end%>
+
+            <%if current_user && @event.admin_id == current_user.id %>
+              <%= link_to "Who's already check-in", event_charges_path(@event.id), :method => 'get', class: 'btn btn-success ml-3'%>
+            <%end%>
+            <br>
+            <%if current_user && @event.admin_id != current_user.id%> 
+              <%= link_to "Participe !", new_event_charge_path(@event.id), :method => 'get', class: 'btn btn-success ml-3'%>
+            <%elsif current_user && @event.admin_id == current_user.id %>
+              <span class="d-flex align-items-center ml-3">You'r the administrator you can't participate</span>
+            <%elsif current_user && Attendance.where(user_id: current_user.id).exists?%>
+              <span class="d-flex align-items-center ml-3">You'r already participate</span>
+            <%else %>
+              <%= link_to "Participe !", new_user_session_path, :method => 'get', class: 'btn btn-success ml-3'%>
+            <%end%>
+          </div>
+
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+</div>

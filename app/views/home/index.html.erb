@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <main role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron bg-dark ">
+        <div class="container">
+          <h1 class="text-center text-white display-3 mb-5">Welcome on The Event Project</h1>
+          <div class="text-center text-white col-md-8 mx-auto mb-5">This website gather all the events organized in Montpellier and around. Sign up now and enter in the events creators community!</div>
+          <div class="text-center col-md-8 mx-auto mb-5"><a class="btn btn-primary btn-lg" href="<%=new_event_path%>" role="button">Create an event &raquo;</a></div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+        	<%Event.all.each do |event|%>
+        	<%@event = event %>
+          <div class="text-center col-md-4 mb-5 my-5">
+            <h2><%= event.title.capitalize!%></h2>
+            <h3 class="text-center card-subtitle mb-2 text-muted">by <%= User.find_by(id: event.admin_id).first_name%> </h3>
+            <p class="text-center card-text"><%= @event.description[0..200] %>...</p> 
+            <p><a href="<%= event_path(@event.id)%>" class="btn btn-info">Voir l'event</a></p>
+          </div>
+          <%end%>
+        </div>
+
+        <hr>
+
+      </div> <!-- /container -->
+
+    </main>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+  </body>
+</html>

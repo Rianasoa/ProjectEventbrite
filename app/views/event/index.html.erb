@@ -1,0 +1,20 @@
+
+<div class="container">
+  <div class="row flex-row">
+    <div class="col d-flex justify-content-center mt-3">
+      <h2>Here are all the events :</h2>
+    </div>
+  </div>
+  
+  <div class="row">
+    <%Event.all.each do |event|%>
+      <%@event = event %>
+      <div class="text-center col-md-4 mb-5 my-5">
+        <h3><%= event.title.capitalize!%></h3>
+        <h4 class="text-center card-subtitle mb-2 text-muted">by <%= User.find(@event.admin_id).first_name%> </h4>
+        <p class="text-center card-text"><%= @event.description[0..80] %>...</p> 
+        <p><a href="<%= event_path(@event.id)%>" class="btn btn-info">Voir l'event</a></p>
+      </div>
+    <%end%>
+  </div>
+</div>

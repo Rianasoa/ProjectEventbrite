@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h2 class="my-3">Here are all the attendees for your event "<%=@event.title%>"</h2>
+          <%Attendance.all.each do |participation|%>
+            <ul class="ml-4 list-unstyled">
+              <%if participation.event_id == @event.id%>
+                <li>🙋 <%=User.find_by(id: participation.user_id).first_name%></li>
+              <%end%>
+              </ul>
+          <%end%>
+          <br>
+          <div class="row mt-2">
+            <%= link_to "Edit", edit_event_path(@event.id), class: "btn btn-info ml-4", :method => 'get'%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
