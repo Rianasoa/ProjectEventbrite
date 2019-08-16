@@ -14,14 +14,14 @@
       <p><strong>Price :</strong> <%= @event.price%></p>
       <p><strong>Duration:</strong><%= @event.duration%> min</p>
       <p><strong>Participation :</strong> <%= Attendance.where(event_id: @event.id).count  %></p>
-      <p><strong>Administrator mail :</strong> <%= admin_event_email%></p>
+      <p><strong>Administrator mail :</strong> <%= User.find(@event.admin_id).email %></p>
       <p><strong>Start at :</strong> <%= @event.start_date%></p>
       <p><strong>End at :</strong> <%=event_end_date%></p>
       <p><strong>Location :</strong> <%= @event.location%></p>
       <blockquote class="blockquote mb-0">
         <em>"<%= @event.description %>"</em><p></p>
         <footer class="blockquote-footer">
-          <p>By : <a href="<%=@event.admin_id%>" class="card-link"><%= User.find(@event.admin_id).first_name%> <%= User.find(@event.admin_id).last_name %></a></p>
+          <p><strong>By :</strong><%= User.find(@event.admin_id).first_name%> <%= User.find(@event.admin_id).last_name %></a></p>
           <p>Create: <%= @event.created_at %></p>
 
           <div class="row flex-row">
